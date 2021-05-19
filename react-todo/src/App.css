@@ -36,3 +36,46 @@
     transform: rotate(360deg);
   }
 }
+
+.main-container{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: center;
+  box-sizing: border-box;
+  color: #636263;
+}
+
+.todo-list-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  padding: 15px 15px;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+
+.todo-input{
+  box-sizing: border-box;
+  align-self: stretch;
+  border: none;
+  outline: none;
+  padding: 10px 10px;
+  color: #636263;
+  font-size: 20px;
+  width: 100%;
+}
+
+.todo-form{
+  align-self: stretch;
+  border: none;
+  border-bottom: 2px solid #E1E0E1;
+  outline: none;
+}
+
+header{
+  /* font-size: 1.5rem */
+}
+
