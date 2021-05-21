@@ -11,18 +11,19 @@ const List = () => {
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [completeAll, setCompleteAll] = useState('false');
   // const [completedAll, setCompletedAll] = useState([]);
+  const [deleteAll, setDeleteAll] = useState('false');
 
   // * use effect *
   // this function runs every time todo value changes
   useEffect(() => {
     // console.log('hey');
     filterHandler();
-  }, [todos, filterStatus]);
+  }, [todos, filterStatus, completeAll]);
 
   // * use effect *
   // this function runs every time completeAll value changes
   useEffect(() => {
-    // console.log('hey');
+    console.log('Complete all use effect');
     completeAllHandler();
   }, [completeAll]);
 
@@ -42,7 +43,7 @@ const List = () => {
   };
 
   const completeAllHandler = () => {
-    setFilteredTodos(
+    setTodos(
       filteredTodos.map((todo) => {
         return todo.completed ? todo : { ...todo, completed: !todo.completed };
       })
@@ -73,6 +74,8 @@ const List = () => {
           setTodos={setTodos}
           completeAll={completeAll}
           setCompleteAll={setCompleteAll}
+          deleteAll={deleteAll}
+          setDeleteAll={setDeleteAll}
         />
       </div>
     </div>
@@ -168,6 +171,8 @@ const ControlPanel = ({
   todos,
   completeAll,
   setCompleteAll,
+  deleteAll,
+  setDeleteAll,
 }) => {
   // * Handlers *
   const statusHandler = (e) => {
@@ -194,7 +199,10 @@ const ControlPanel = ({
 
   return (
     <div className="control-panel">
-      <span className="control-complete-all" onClick={completeAllHandler}>
+      <span
+        className="control-complete-all"
+        onClick={() => setCompleteAll(!completeAll)}
+      >
         {countLeftTasks(todos)} tasks left
       </span>
       <form className="control-radios" name="radios" onChange={statusHandler}>
@@ -217,7 +225,12 @@ const ControlPanel = ({
           name="radios"
         ></input>
       </form>
-      <span className="control-clear-completed">Clear completed</span>
+      <span
+        className="control-clear-completed"
+        onClick={() => setDeleteAll(!deleteAll)}
+      >
+        Clear completed
+      </span>
     </div>
   );
 };
