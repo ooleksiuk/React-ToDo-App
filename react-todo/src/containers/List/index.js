@@ -16,25 +16,25 @@ const List = () => {
   // const [completedAll, setCompletedAll] = useState([]);
   const [clearCompletedStatus, setClearCompleted] = useState('false');
 
-  // * use effect hooks*
-  // this function runs every time todo value changes
-  useEffect(() => {
-    console.log('use effect: FILTER list');
-    const filterHandler = () => {
-      switch (filterStatus) {
-        case 'completed':
-          setFilteredTodos(todos.filter((todo) => todo.completed));
-          break;
-        case 'uncompleted':
-          setFilteredTodos(todos.filter((todo) => !todo.completed));
-          break;
-        default:
-          setFilteredTodos(todos);
-          break;
-      }
-    };
-    filterHandler();
-  }, [todos, filterStatus]);
+  // // * use effect hooks*
+  // // this function runs every time todo value changes
+  // useEffect(() => {
+  //   console.log('use effect: FILTER list');
+  //   const filterHandler = () => {
+  //     switch (filterStatus) {
+  //       case 'completed':
+  //         setFilteredTodos(todos.filter((todo) => todo.completed));
+  //         break;
+  //       case 'uncompleted':
+  //         setFilteredTodos(todos.filter((todo) => !todo.completed));
+  //         break;
+  //       default:
+  //         setFilteredTodos(todos);
+  //         break;
+  //     }
+  //   };
+  //   filterHandler();
+  // }, [todos, filterStatus]);
 
   const test = useMemo(() => {
     switch (filterStatus) {
@@ -62,14 +62,17 @@ const List = () => {
     completeAllHandler();
   }, [completeAll]);
 
+  const handlerCompleteAll = () => {
+    setTodos(todos.map((todo) => (todo.completed ? todo : { ...todo, completed: !todo.completed })))
+  };
   // this function runs every time completeAll value changes
-  useEffect(() => {
-    console.log('use effect: DELETE ALL');
-    const deleteAllHandler = () => {
-      setTodos(filteredTodos.filter((todo) => !todo.completed));
-    };
-    deleteAllHandler();
-  }, [clearCompletedStatus]);
+  // useEffect(() => {
+  //   console.log('use effect: DELETE ALL');
+  //   const deleteAllHandler = () => {
+
+  //   };
+  //   deleteAllHandler();
+  // }, [clearCompletedStatus]);
 
   return (
     <div className="main-container">
@@ -94,7 +97,7 @@ const List = () => {
           todos={todos}
           setTodos={setTodos}
           completeAll={completeAll}
-          setCompleteAll={setCompleteAll}
+          setCompleteAll={handlerCompleteAll}
           clearCompletedStatus={clearCompletedStatus}
           setClearCompleted={setClearCompleted}
           filterStatus={filterStatus}

@@ -1,4 +1,4 @@
-import { TodoItem } from '../../components/TodoItem/index';
+import { TodoItem } from '../../components/TodoItem';
 import React from 'react';
 
 export const TodoList = ({
