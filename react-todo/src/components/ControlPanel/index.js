@@ -8,6 +8,7 @@ export const ControlPanel = ({
   clearCompletedStatus,
   setClearCompleted,
   filterStatus,
+  clearAllCompleted,
 }) => {
   // * Handlers *
   const statusHandler = (e) => {
@@ -34,10 +35,7 @@ export const ControlPanel = ({
 
   return (
     <div className="control-panel">
-      <span
-        className="control-complete-all"
-        onClick={() => setCompleteAll(!completeAll)}
-      >
+      <span className="control-complete-all" onClick={() => setCompleteAll()}>
         {countLeftTasks(todos)} tasks left
       </span>
       <form className="control-radios" name="radios" onChange={statusHandler}>
@@ -63,7 +61,7 @@ export const ControlPanel = ({
       </form>
       <span
         className="control-clear-completed"
-        onClick={() => setClearCompleted(!clearCompletedStatus)}
+        onClick={() => clearAllCompleted()}
       >
         Clear completed
       </span>

@@ -47,24 +47,33 @@ const List = () => {
     }
   }, [todos, filterStatus]);
 
-  // this function runs every time completeAll value changes
-  useEffect(() => {
-    console.log('use effect: COMPLETE ALL');
-    const completeAllHandler = () => {
-      setTodos(
-        filteredTodos.map((todo) => {
-          return todo.completed
-            ? todo
-            : { ...todo, completed: !todo.completed };
-        })
-      );
-    };
-    completeAllHandler();
-  }, [completeAll]);
+  // // this function runs every time completeAll value changes
+  // useEffect(() => {
+  //   console.log('use effect: COMPLETE ALL');
+  //   const completeAllHandler = () => {
+  //     setTodos(
+  //       filteredTodos.map((todo) => {
+  //         return todo.completed
+  //           ? todo
+  //           : { ...todo, completed: !todo.completed };
+  //       })
+  //     );
+  //   };
+  //   completeAllHandler();
+  // }, [completeAll]);
 
   const handlerCompleteAll = () => {
-    setTodos(todos.map((todo) => (todo.completed ? todo : { ...todo, completed: !todo.completed })))
+    setTodos(
+      todos.map((todo) =>
+        todo.completed ? todo : { ...todo, completed: !todo.completed }
+      )
+    );
   };
+
+  const handlerClearAllCompleted = () => {
+    setTodos(todos.filter((todo) => !todo.completed));
+  };
+
   // this function runs every time completeAll value changes
   // useEffect(() => {
   //   console.log('use effect: DELETE ALL');
@@ -97,7 +106,10 @@ const List = () => {
           todos={todos}
           setTodos={setTodos}
           completeAll={completeAll}
+          //
           setCompleteAll={handlerCompleteAll}
+          clearAllCompleted={handlerClearAllCompleted}
+          //
           clearCompletedStatus={clearCompletedStatus}
           setClearCompleted={setClearCompleted}
           filterStatus={filterStatus}
