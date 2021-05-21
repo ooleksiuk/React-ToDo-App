@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 const List = () => {
   // * State values *
@@ -31,7 +31,18 @@ const List = () => {
       }
     };
     filterHandler();
-  }, [todos, filterStatus, completeAll]);
+  }, [todos, filterStatus]);
+
+  const test = useMemo(() => {
+    switch (filterStatus) {
+      case 'completed':
+        return todos.filter((todo) => todo.completed);
+      case 'uncompleted':
+        return todos.filter((todo) => !todo.completed);
+      default:
+        return todos;
+    }
+  }, [todos, filterStatus]);
 
   // this function runs every time completeAll value changes
   useEffect(() => {
@@ -72,7 +83,7 @@ const List = () => {
         <TodoList
           todos={todos}
           setTodos={setTodos}
-          filteredTodos={filteredTodos}
+          filteredTodos={test}
           setFilteredTodos={setFilteredTodos}
         />
         <ControlPanel
@@ -83,6 +94,7 @@ const List = () => {
           setCompleteAll={setCompleteAll}
           clearCompletedStatus={clearCompletedStatus}
           setClearCompleted={setClearCompleted}
+          filterStatus={filterStatus}
         />
       </div>
     </div>
@@ -180,6 +192,7 @@ const ControlPanel = ({
   setCompleteAll,
   clearCompletedStatus,
   setClearCompleted,
+  filterStatus,
 }) => {
   // * Handlers *
   const statusHandler = (e) => {
@@ -218,7 +231,7 @@ const ControlPanel = ({
           value="all"
           className="control-radio"
           name="radios"
-          checked
+          defaultChecked
         ></input>
         <input
           type="radio"
