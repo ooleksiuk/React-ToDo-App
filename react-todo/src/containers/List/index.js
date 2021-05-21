@@ -11,30 +11,6 @@ const List = () => {
   // an array of objects to store Todo's Items
   const [todos, setTodos] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
-  const [filteredTodos, setFilteredTodos] = useState([]);
-  const [completeAll, setCompleteAll] = useState('false');
-  // const [completedAll, setCompletedAll] = useState([]);
-  const [clearCompletedStatus, setClearCompleted] = useState('false');
-
-  // // * use effect hooks*
-  // // this function runs every time todo value changes
-  // useEffect(() => {
-  //   console.log('use effect: FILTER list');
-  //   const filterHandler = () => {
-  //     switch (filterStatus) {
-  //       case 'completed':
-  //         setFilteredTodos(todos.filter((todo) => todo.completed));
-  //         break;
-  //       case 'uncompleted':
-  //         setFilteredTodos(todos.filter((todo) => !todo.completed));
-  //         break;
-  //       default:
-  //         setFilteredTodos(todos);
-  //         break;
-  //     }
-  //   };
-  //   filterHandler();
-  // }, [todos, filterStatus]);
 
   const test = useMemo(() => {
     switch (filterStatus) {
@@ -47,20 +23,7 @@ const List = () => {
     }
   }, [todos, filterStatus]);
 
-  // // this function runs every time completeAll value changes
-  // useEffect(() => {
-  //   console.log('use effect: COMPLETE ALL');
-  //   const completeAllHandler = () => {
-  //     setTodos(
-  //       filteredTodos.map((todo) => {
-  //         return todo.completed
-  //           ? todo
-  //           : { ...todo, completed: !todo.completed };
-  //       })
-  //     );
-  //   };
-  //   completeAllHandler();
-  // }, [completeAll]);
+  // * Handlers
 
   const handlerCompleteAll = () => {
     setTodos(
@@ -74,18 +37,12 @@ const List = () => {
     setTodos(todos.filter((todo) => !todo.completed));
   };
 
-  const handlerAddTodo = (e) => {
-    if (e.key !== 'Enter') return;
+  const handlerAddTodo = () => {
     setTodos([
-      // if there are some todos in the list already, just pass it together
       ...todos,
       { text: inputText, completed: false, id: Math.random() * 1000 },
     ]);
-
-    // reset input state-value
     setInputText('');
-    // reset placeholder
-    e.target.value = '';
   };
 
   const handlerDelete = (id) => {
@@ -95,20 +52,21 @@ const List = () => {
 
   const handlerComplete = (id) => {
     setTodos(
-      todos.map((el) => {
-        return el.id === id ? { ...el, completed: !el.completed } : el;
-      })
+      todos.map((el) =>
+        el.id === id ? { ...el, completed: !el.completed } : el
+      )
     );
   };
 
-  // this function runs every time completeAll value changes
-  // useEffect(() => {
-  //   console.log('use effect: DELETE ALL');
-  //   const deleteAllHandler = () => {
+  const handlerSetFilterStatus = (e) => {
+    setFilterStatus(e.target.value);
+  };
 
-  //   };
-  //   deleteAllHandler();
-  // }, [clearCompletedStatus]);
+  // * Functions *
+  const countLeftTasks = (todos) => {
+    const count = todos.filter((todo) => !todo.completed).length;
+    return count;
+  };
 
   return (
     <div className="main-container">
@@ -117,32 +75,20 @@ const List = () => {
       </header>
       <div className="todo-list-container">
         <InputForm
-          setInputText={setInputText}
+          setInputText={(e) => setInputText(e)}
           inputText={inputText}
-          todos={todos}
-          setTodos={setTodos}
           handlerAddTodo={handlerAddTodo}
         />
         <TodoList
-          todos={todos}
-          setTodos={setTodos}
           filteredTodos={test}
-          setFilteredTodos={setFilteredTodos}
           handlerDelete={handlerDelete}
           handlerComplete={handlerComplete}
         />
         <ControlPanel
-          setFilterStatus={setFilterStatus}
-          todos={todos}
-          setTodos={setTodos}
-          completeAll={completeAll}
-          //
+          leftTasksNumber={countLeftTasks(todos)}
           setCompleteAll={handlerCompleteAll}
           clearAllCompleted={handlerClearAllCompleted}
-          //
-          clearCompletedStatus={clearCompletedStatus}
-          setClearCompleted={setClearCompleted}
-          filterStatus={filterStatus}
+          handlerSetFilterStatus={handlerSetFilterStatus}
         />
       </div>
     </div>

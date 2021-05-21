@@ -1,26 +1,6 @@
 import React from 'react';
 
-export const TodoItem = ({
-  text,
-  todos,
-  todo,
-  setTodos,
-  handlerDelete,
-  handlerComplete,
-}) => {
-  // * Events *
-  // const deleteHandler = () => {
-  //   setTodos(todos.filter((el) => el.id !== todo.id));
-  // };
-
-  // const completeHandler = () => {
-  //   setTodos(
-  //     todos.map((el) => {
-  //       return el.id === todo.id ? { ...el, completed: !el.completed } : el;
-  //     })
-  //   );
-  // };
-
+export const TodoItem = ({ text, todo, handlerDelete, handlerComplete }) => {
   return (
     <div className="todo">
       <button className="complete-btn" onClick={() => handlerComplete(todo.id)}>

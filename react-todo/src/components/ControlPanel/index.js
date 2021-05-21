@@ -1,44 +1,21 @@
 import React from 'react';
 
 export const ControlPanel = ({
-  setFilterStatus,
-  todos,
-  completeAll,
+  leftTasksNumber,
   setCompleteAll,
-  clearCompletedStatus,
-  setClearCompleted,
-  filterStatus,
   clearAllCompleted,
+  handlerSetFilterStatus,
 }) => {
-  // * Handlers *
-  const statusHandler = (e) => {
-    setFilterStatus(e.target.value);
-  };
-
-  //   const completeAllHandler = (todos) => {
-  //   setTodos(
-  //     todos.map((todo) => {
-  //       return { ...todo, completed: todo.completed };
-  //     })
-  //   );
-  // };
-
-  // const completeAllHandler = (todos) => {
-  //   setCompleteAll(!completeAll);
-  // };
-
-  // * Functions *
-  const countLeftTasks = (todos) => {
-    const count = todos.filter((todo) => !todo.completed).length;
-    return count;
-  };
-
   return (
     <div className="control-panel">
       <span className="control-complete-all" onClick={() => setCompleteAll()}>
-        {countLeftTasks(todos)} tasks left
+        {leftTasksNumber} tasks left
       </span>
-      <form className="control-radios" name="radios" onChange={statusHandler}>
+      <form
+        className="control-radios"
+        name="radios"
+        onChange={handlerSetFilterStatus}
+      >
         <input
           type="radio"
           value="all"
