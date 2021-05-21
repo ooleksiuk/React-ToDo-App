@@ -11,44 +11,51 @@ const List = () => {
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [completeAll, setCompleteAll] = useState('false');
   // const [completedAll, setCompletedAll] = useState([]);
-  const [deleteAll, setDeleteAll] = useState('false');
+  const [clearCompletedStatus, setClearCompleted] = useState('false');
 
-  // * use effect *
+  // * use effect hooks*
   // this function runs every time todo value changes
   useEffect(() => {
-    // console.log('hey');
+    console.log('use effect: FILTER list');
+    const filterHandler = () => {
+      switch (filterStatus) {
+        case 'completed':
+          setFilteredTodos(todos.filter((todo) => todo.completed));
+          break;
+        case 'uncompleted':
+          setFilteredTodos(todos.filter((todo) => !todo.completed));
+          break;
+        default:
+          setFilteredTodos(todos);
+          break;
+      }
+    };
     filterHandler();
   }, [todos, filterStatus, completeAll]);
 
-  // * use effect *
   // this function runs every time completeAll value changes
   useEffect(() => {
-    console.log('Complete all use effect');
+    console.log('use effect: COMPLETE ALL');
+    const completeAllHandler = () => {
+      setTodos(
+        filteredTodos.map((todo) => {
+          return todo.completed
+            ? todo
+            : { ...todo, completed: !todo.completed };
+        })
+      );
+    };
     completeAllHandler();
   }, [completeAll]);
 
-  // * Functions *
-  const filterHandler = () => {
-    switch (filterStatus) {
-      case 'completed':
-        setFilteredTodos(todos.filter((todo) => todo.completed));
-        break;
-      case 'uncompleted':
-        setFilteredTodos(todos.filter((todo) => !todo.completed));
-        break;
-      default:
-        setFilteredTodos(todos);
-        break;
-    }
-  };
-
-  const completeAllHandler = () => {
-    setTodos(
-      filteredTodos.map((todo) => {
-        return todo.completed ? todo : { ...todo, completed: !todo.completed };
-      })
-    );
-  };
+  // this function runs every time completeAll value changes
+  useEffect(() => {
+    console.log('use effect: DELETE ALL');
+    const deleteAllHandler = () => {
+      setTodos(filteredTodos.filter((todo) => !todo.completed));
+    };
+    deleteAllHandler();
+  }, [clearCompletedStatus]);
 
   return (
     <div className="main-container">
@@ -74,8 +81,8 @@ const List = () => {
           setTodos={setTodos}
           completeAll={completeAll}
           setCompleteAll={setCompleteAll}
-          deleteAll={deleteAll}
-          setDeleteAll={setDeleteAll}
+          clearCompletedStatus={clearCompletedStatus}
+          setClearCompleted={setClearCompleted}
         />
       </div>
     </div>
@@ -171,8 +178,8 @@ const ControlPanel = ({
   todos,
   completeAll,
   setCompleteAll,
-  deleteAll,
-  setDeleteAll,
+  clearCompletedStatus,
+  setClearCompleted,
 }) => {
   // * Handlers *
   const statusHandler = (e) => {
@@ -187,9 +194,9 @@ const ControlPanel = ({
   //   );
   // };
 
-  const completeAllHandler = (todos) => {
-    setCompleteAll(!completeAll);
-  };
+  // const completeAllHandler = (todos) => {
+  //   setCompleteAll(!completeAll);
+  // };
 
   // * Functions *
   const countLeftTasks = (todos) => {
@@ -211,6 +218,7 @@ const ControlPanel = ({
           value="all"
           className="control-radio"
           name="radios"
+          checked
         ></input>
         <input
           type="radio"
@@ -227,7 +235,7 @@ const ControlPanel = ({
       </form>
       <span
         className="control-clear-completed"
-        onClick={() => setDeleteAll(!deleteAll)}
+        onClick={() => setClearCompleted(!clearCompletedStatus)}
       >
         Clear completed
       </span>
