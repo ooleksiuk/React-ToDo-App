@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { InputForm } from '../../components/InputForm/index';
 import { TodoList } from '../../components/TodoList/index';
 import { ControlPanel } from '../../components/ControlPanel/index';
@@ -74,6 +74,33 @@ const List = () => {
     setTodos(todos.filter((todo) => !todo.completed));
   };
 
+  const handlerAddTodo = (e) => {
+    if (e.key !== 'Enter') return;
+    setTodos([
+      // if there are some todos in the list already, just pass it together
+      ...todos,
+      { text: inputText, completed: false, id: Math.random() * 1000 },
+    ]);
+
+    // reset input state-value
+    setInputText('');
+    // reset placeholder
+    e.target.value = '';
+  };
+
+  const handlerDelete = (id) => {
+    console.log(id);
+    setTodos(todos.filter((el) => el.id !== id));
+  };
+
+  const handlerComplete = (id) => {
+    setTodos(
+      todos.map((el) => {
+        return el.id === id ? { ...el, completed: !el.completed } : el;
+      })
+    );
+  };
+
   // this function runs every time completeAll value changes
   // useEffect(() => {
   //   console.log('use effect: DELETE ALL');
@@ -94,12 +121,15 @@ const List = () => {
           inputText={inputText}
           todos={todos}
           setTodos={setTodos}
+          handlerAddTodo={handlerAddTodo}
         />
         <TodoList
           todos={todos}
           setTodos={setTodos}
           filteredTodos={test}
           setFilteredTodos={setFilteredTodos}
+          handlerDelete={handlerDelete}
+          handlerComplete={handlerComplete}
         />
         <ControlPanel
           setFilterStatus={setFilterStatus}
