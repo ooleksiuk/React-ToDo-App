@@ -3,8 +3,8 @@ import { useState, useMemo } from 'react';
 import { InputForm } from '../../components/InputForm';
 import { TodoList } from '../../components/TodoList';
 import { ControlPanel } from '../../components/ControlPanel';
-import './index.css';
 
+import './index.css';
 
 const List = () => {
   // * State values *
@@ -13,6 +13,7 @@ const List = () => {
   // an array of objects to store Todo's Items
   const [todos, setTodos] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
+  const [itemId, setItemId] = useState(1);
 
   const test = useMemo(() => {
     switch (filterStatus) {
@@ -40,10 +41,8 @@ const List = () => {
   };
 
   const handlerAddTodo = () => {
-    setTodos([
-      ...todos,
-      { text: inputText, completed: false, id: Math.random() * 1000 },
-    ]);
+    setTodos([...todos, { text: inputText, completed: false, id: itemId }]);
+    setItemId(itemId + 1);
     setInputText('');
   };
 
