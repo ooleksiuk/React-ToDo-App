@@ -1,0 +1,50 @@
+
+.todo-item {
+  list-style-type: none;
+  align-self:center;
+  
+  flex-grow: 1;
+  margin: 0 5px;
+  font-size: 18px
+}
+
+.todo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: center;
+  border-bottom: 2px solid #E1E0E1;
+  padding: 15px 10px;
+}
+
+.fa-circle {
+  font-size: 25px;
+  color: #E1E0E1;;
+}
+
+.fa-check {
+  color: green;
+}
+
+.fa-trash-alt {
+  font-size: 20px;
+  color: #b9b8b9;;
+}
+
+
+.trash-btn{
+  margin-right: 20px ;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #c0bfc0;
+}
+
+button {
+  margin-left: 10px ;
+  background: none;
+  border: none;
+  outline: none;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import './InputForm.css';
 
 export const InputForm = ({ setInputText, inputText, handlerAddTodo }) => {
   // * Handlers *
@@ -8,8 +9,7 @@ export const InputForm = ({ setInputText, inputText, handlerAddTodo }) => {
 
   const onKeyPress = (e) => {
     // prevent empty input
-    if (e.key !== 'Enter') return;
-    if (!e.target.value) return;
+    if (e.key !== 'Enter' || !e.target.value) return;
     handlerAddTodo();
   };
 

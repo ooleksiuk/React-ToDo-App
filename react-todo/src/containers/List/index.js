@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState, useMemo } from 'react';
-import { InputForm } from '../../components/InputForm/index';
-import { TodoList } from '../../components/TodoList/index';
-import { ControlPanel } from '../../components/ControlPanel/index';
+import { InputForm } from '../../components/InputForm';
+import { TodoList } from '../../components/TodoList';
+import { ControlPanel } from '../../components/ControlPanel';
+import './index.css';
+
 
 const List = () => {
   // * State values *
@@ -63,10 +65,6 @@ const List = () => {
   };
 
   // * Functions *
-  const countLeftTasks = (todos) => {
-    const count = todos.filter((todo) => !todo.completed).length;
-    return count;
-  };
 
   return (
     <div className="main-container">
@@ -84,12 +82,15 @@ const List = () => {
           handlerDelete={handlerDelete}
           handlerComplete={handlerComplete}
         />
-        <ControlPanel
-          leftTasksNumber={countLeftTasks(todos)}
-          setCompleteAll={handlerCompleteAll}
-          clearAllCompleted={handlerClearAllCompleted}
-          handlerSetFilterStatus={handlerSetFilterStatus}
-        />
+        {!!todos.length && (
+          <ControlPanel
+            leftTasksNumber={todos.filter((todo) => !todo.completed).length}
+            setCompleteAll={handlerCompleteAll}
+            clearAllCompleted={handlerClearAllCompleted}
+            handlerSetFilterStatus={handlerSetFilterStatus}
+            hasAnyCompleted={!!todos.filter((todo) => todo.completed).length}
+          />
+        )}
       </div>
     </div>
   );

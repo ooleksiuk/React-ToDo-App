@@ -1,0 +1,43 @@
+.control-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  margin: 0 30px;
+  color: #a0a0a0;
+  margin: 12px 18px;
+  font-size: 15px;
+}
+.control-radios {
+  display: flex;
+  align-self: center;
+  flex-wrap: wrap; 
+  justify-content: space-around;
+}
+
+
+.control-panel span {
+  align-self: center;
+  margin: auto 0;
+}
+
+
+.control-radios input {
+  appearance: none;
+  margin: 0px 6px;
+}
+
+.control-radios label {
+  padding: 7px 5px;
+  color: #2e2d2d
+}
+
+input:checked + label {
+  border: solid #a0a0a0 2px;
+  border-radius: 7px;
+  padding: 8px 6px;
+}
+
+.hidden {
+  visibility: hidden;
+}

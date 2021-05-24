@@ -1,5 +1,6 @@
-import { TodoItem } from '../../components/TodoItem';
+import TodoItem from '../../components/TodoItem';
 import React from 'react';
+import './TodoList.css';
 
 export const TodoList = ({ filteredTodos, handlerDelete, handlerComplete }) => {
   return (
