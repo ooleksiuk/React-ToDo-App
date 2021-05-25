@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState, useMemo } from 'react';
 import { InputForm } from '../../components/InputForm';
 import { TodoList } from '../../components/TodoList';
 import { ControlPanel } from '../../components/ControlPanel';
+import { addTodo, deleteTodo, statusCheck } from '../../store/list/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
 
 const List = () => {
+  const dispatch = useDispatch();
+  const list = useSelector((state) => state.list.list);
   // * State values *
   // input - text value of the input (use it as props)
   const [inputText, setInputText] = useState('');
@@ -15,16 +19,20 @@ const List = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [itemId, setItemId] = useState(1);
 
-  const test = useMemo(() => {
+  console.log('list', list);
+
+  const testList = useMemo(() => {
     switch (filterStatus) {
       case 'completed':
-        return todos.filter((todo) => todo.completed);
+        return list.filter((todo) => todo.completed);
       case 'uncompleted':
-        return todos.filter((todo) => !todo.completed);
+        return list.filter((todo) => !todo.completed);
       default:
-        return todos;
+        return list;
     }
-  }, [todos, filterStatus]);
+  }, [list, filterStatus]);
+
+  // console.log('ffffffffffff', testList.list);
 
   // * Handlers
 
@@ -41,20 +49,22 @@ const List = () => {
   };
 
   const handlerAddTodo = () => {
-    setTodos([...todos, { text: inputText, completed: false, id: itemId }]);
-    setItemId(itemId + 1);
+    dispatch(addTodo({ text: inputText, completed: false }));
     setInputText('');
   };
 
   const handlerDelete = (id) => {
     console.log(id);
-    setTodos(todos.filter((el) => el.id !== id));
+    dispatch(deleteTodo(id));
+    // setTodos(todos.filter((el) => el.id !== id));
   };
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   const handlerComplete = (id) => {
     setTodos(
-      todos.map((el) =>
-        el.id === id ? { ...el, completed: !el.completed } : el
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
   };
@@ -77,7 +87,7 @@ const List = () => {
           handlerAddTodo={handlerAddTodo}
         />
         <TodoList
-          filteredTodos={test}
+          filteredTodos={testList}
           handlerDelete={handlerDelete}
           handlerComplete={handlerComplete}
         />
