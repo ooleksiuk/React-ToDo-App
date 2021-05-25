@@ -10,14 +10,14 @@ export const ControlPanel = ({
 }) => {
   return (
     <div className="control-panel">
+      <span className="control-complete-all" onClick={() => setCompleteAll()}>
+        {leftTasksNumber} tasks left
+      </span>
       <form
         className="control-radios"
         name="radios"
         onChange={handlerSetFilterStatus}
       >
-        <span className="control-complete-all" onClick={() => setCompleteAll()}>
-          {leftTasksNumber} tasks left
-        </span>
         <input
           type="radio"
           value="all"
@@ -43,15 +43,15 @@ export const ControlPanel = ({
           id="completed"
         ></input>
         <label htmlFor="completed">Completed</label>
-        {hasAnyCompleted && (
-          <span
-            className="control-clear-completed"
-            onClick={() => clearAllCompleted()}
-          >
-            Clear completed
-          </span>
-        )}
       </form>
+      {hasAnyCompleted && (
+        <span
+          className="control-clear-completed"
+          onClick={() => clearAllCompleted()}
+        >
+          Clear completed
+        </span>
+      )}
     </div>
   );
 };
