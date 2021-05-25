@@ -1,8 +1,7 @@
 .control-panel {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
   align-content: center;
   margin: 0 30px;
   color: #a0a0a0;
@@ -12,29 +11,34 @@
 
 .control-radios {
   display: flex;
+  position: relative;
   flex-direction: row;
   align-items: center;
   align-self: center;
-  
   flex-wrap: wrap; 
   justify-content: space-around;
 }
 
+.control-complete-all{
+  width: 100%;
+  position: absolute; 
+  margin-right: 300px;
+}
 
-.control-panel span {
-  align-self: center;
-  margin: auto 0;
+.control-clear-completed{
+  position: absolute;
+  margin-left: 500px;
+  width: 100%;
 }
 
 
 .control-radios input {
-  padding: 7px 5px;
   appearance: none;
   outline: none;
-  margin: 0px 6px;
 }
 
 .control-radios label {
+  padding: 7px 5px;
   color: #2e2d2d
 }
 
