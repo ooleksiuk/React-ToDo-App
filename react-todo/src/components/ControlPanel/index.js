@@ -26,7 +26,7 @@ export const ControlPanel = ({
           name="radios"
           defaultChecked
         ></input>
-        <label for="all">All</label>
+        <label htmlFor="all">All</label>
         <input
           type="radio"
           value="uncompleted"
@@ -34,7 +34,7 @@ export const ControlPanel = ({
           name="radios"
           id="uncompleted"
         ></input>
-        <label for="uncompleted">Todo</label>
+        <label htmlFor="uncompleted">Todo</label>
         <input
           type="radio"
           value="completed"
@@ -42,7 +42,7 @@ export const ControlPanel = ({
           name="radios"
           id="completed"
         ></input>
-        <label for="completed">Completed</label>
+        <label htmlFor="completed">Completed</label>
       </form>
       <span
         className={`control-clear-completed ${!hasAnyCompleted && ' hidden'}`}
