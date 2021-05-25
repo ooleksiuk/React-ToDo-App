@@ -1,6 +1,6 @@
 
 .todo-container{
-  max-height: 390px;
+ max-height: 390px;
  overflow-y: scroll;
  padding: 0px 0px;
 }

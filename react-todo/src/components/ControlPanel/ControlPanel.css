@@ -30,6 +30,7 @@
 .control-radios input {
   padding: 7px 5px;
   appearance: none;
+  outline: none;
   margin: 0px 6px;
 }
 
