@@ -44,10 +44,9 @@ const List = () => {
   };
 
   const handlerComplete = (ids) => {
-    console.log('Complete Handler ids:', ids);
-    // const ids = list.map((todo) => todo.id);
-    console.log('текущий массив индексов', ids);
-    dispatch(changeStatus(ids));
+    typeof ids === 'object'
+      ? dispatch(changeStatus(ids))
+      : dispatch(changeStatus([ids]));
   };
 
   const handlerSetFilterStatus = (name) => {
