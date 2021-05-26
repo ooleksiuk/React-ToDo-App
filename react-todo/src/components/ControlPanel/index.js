@@ -10,7 +10,11 @@ export const ControlPanel = ({
 }) => {
   return (
     <div className="control-panel">
-      <span className="control-complete-all" onClick={() => setCompleteAll()}>
+      <span
+        className="control-complete-all"
+        id="completeAll"
+        onClick={(e) => setCompleteAll(e.target.id)}
+      >
         {leftTasksNumber} tasks left
       </span>
       <form
@@ -47,7 +51,8 @@ export const ControlPanel = ({
       {hasAnyCompleted && (
         <span
           className="control-clear-completed"
-          onClick={() => clearAllCompleted()}
+          id="clearAll"
+          onClick={(e) => clearAllCompleted(e.target.id)}
         >
           Clear completed
         </span>
@@ -55,8 +60,3 @@ export const ControlPanel = ({
     </div>
   );
 };
-
-/* <span
-        className={`control-clear-completed ${!hasAnyCompleted && ' hidden'}`}
-        onClick={() => clearAllCompleted()}
-      > */

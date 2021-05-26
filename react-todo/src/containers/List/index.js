@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
+import { completeAll } from '../../store/controPanel/actions';
 
 const List = () => {
   // *  Redux *
@@ -38,42 +39,20 @@ const List = () => {
     }
   }, [list, filterStatus]);
 
-  // console.log('ffffffffffff', testList.list);
-
   // * Handlers
-
-  const handlerCompleteAll = () => {
-    setTodos(
-      todos.map((todo) =>
-        todo.completed ? todo : { ...todo, completed: !todo.completed }
-      )
-    );
-  };
-
-  const handlerClearAllCompleted = () => {
-    setTodos(todos.filter((todo) => !todo.completed));
-  };
 
   const handlerAddTodo = () => {
     dispatch(addTodo({ text: inputText, completed: false }));
     setInputText('');
-    console.log('list', list);
-    console.log('state', state);
   };
 
   const handlerDelete = (id) => {
-    console.log(id);
     dispatch(deleteTodo(id));
-    // setTodos(todos.filter((el) => el.id !== id));
   };
 
   const handlerComplete = (id) => {
+    console.log('Complete Handler id:', id);
     dispatch(changeStatus(id));
-    // setTodos(
-    //   todos.map((todo) =>
-    //     todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    //   )
-    // );
   };
 
   const handlerSetFilterStatus = (e) => {
@@ -101,8 +80,8 @@ const List = () => {
         {!!list.length && (
           <ControlPanel
             leftTasksNumber={list.filter((todo) => !todo.completed).length}
-            setCompleteAll={handlerCompleteAll}
-            clearAllCompleted={handlerClearAllCompleted}
+            setCompleteAll={handlerComplete}
+            clearAllCompleted={handlerDelete}
             handlerSetFilterStatus={handlerSetFilterStatus}
             hasAnyCompleted={!!list.filter((todo) => todo.completed).length}
           />
