@@ -30,19 +30,25 @@ export default function (state = initalState, action) {
       };
     }
 
-    case DELETE_TODO: {
-      if (action.payload === 'clearAll') {
-        return {
-          ...state,
-          list: state.list.filter((todo) => !todo.completed),
-        };
-      } else {
-        return {
-          ...state,
-          list: state.list.filter((todo) => todo.id !== action.payload),
-        };
-      }
-    }
+    // case DELETE_TODO: {
+    //   console.log(state.list.filter((todo) => {
+    //     return action.payload.includes(todo.id) ?
+    //   }))
+    // }
+
+    // case DELETE_TODO: {
+    //   if (action.payload === 'clearAll') {
+    //     return {
+    //       ...state,
+    //       list: state.list.filter((todo) => !todo.completed),
+    //     };
+    //   } else {
+    //     return {
+    //       ...state,
+    //       list: state.list.filter((todo) => todo.id !== action.payload),
+    //     };
+    //   }
+    // }
 
     default:
       return state;

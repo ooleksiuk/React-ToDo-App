@@ -7,7 +7,7 @@ export const ControlPanel = ({
   setCompleteAll,
   clearAllCompleted,
   handlerSetFilterStatus,
-  hasAnyCompleted,
+  AnyCompleted,
 }) => {
   return (
     <div className="control-panel">
@@ -49,11 +49,11 @@ export const ControlPanel = ({
         ></input>
         <label htmlFor="completed">Completed</label>
       </form>
-      {hasAnyCompleted && (
+      {!!AnyCompleted.length && (
         <span
           className="control-clear-completed"
           id="clearAll"
-          onClick={(e) => clearAllCompleted(e.target.id)}
+          onClick={() => clearAllCompleted(AnyCompleted)}
         >
           Clear completed
         </span>

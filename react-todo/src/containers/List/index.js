@@ -77,7 +77,7 @@ const List = () => {
             setCompleteAll={handlerComplete}
             clearAllCompleted={handlerDelete}
             handlerSetFilterStatus={handlerSetFilterStatus}
-            hasAnyCompleted={!!list.filter((todo) => todo.completed).length}
+            AnyCompleted={list.filter((todo) => todo.completed)}
           />
         )}
       </div>
