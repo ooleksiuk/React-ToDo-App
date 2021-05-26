@@ -1,34 +1,24 @@
-import React, { useEffect } from 'react';
 import { useState, useMemo } from 'react';
 import { InputForm } from '../../components/InputForm';
 import { TodoList } from '../../components/TodoList';
 import { ControlPanel } from '../../components/ControlPanel';
-import {
-  addTodo,
-  changeStatus,
-  deleteTodo,
-  statusCheck,
-} from '../../store/list/actions';
+import { addTodo, changeStatus, deleteTodo } from '../../store/list/actions';
+import { changeFilter } from '../../store/controPanel/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
-import { completeAll } from '../../store/controPanel/actions';
 
 const List = () => {
   // *  Redux *
   const dispatch = useDispatch();
   const list = useSelector((state) => state.list.list);
-  const state = useSelector((state) => state);
+  const filterStatus = useSelector((state) => state.controlPanel.status.name);
 
   // * State values *
   // input - text value of the input (use it as props)
   const [inputText, setInputText] = useState('');
-  // an array of objects to store Todo's Items
-  const [todos, setTodos] = useState([]);
-  const [filterStatus, setFilterStatus] = useState('all');
-  const [itemId, setItemId] = useState(1);
 
-  const testList = useMemo(() => {
+  const filteredList = useMemo(() => {
     switch (filterStatus) {
       case 'completed':
         return list.filter((todo) => todo.completed);
@@ -39,7 +29,7 @@ const List = () => {
     }
   }, [list, filterStatus]);
 
-  // * Handlers
+  // * Handlers *
 
   const handlerAddTodo = () => {
     dispatch(addTodo({ text: inputText, completed: false }));
@@ -55,8 +45,8 @@ const List = () => {
     dispatch(changeStatus(id));
   };
 
-  const handlerSetFilterStatus = (e) => {
-    setFilterStatus(e.target.value);
+  const handlerSetFilterStatus = (name) => {
+    dispatch(changeFilter(name));
   };
 
   // * Functions *
@@ -73,7 +63,7 @@ const List = () => {
           handlerAddTodo={handlerAddTodo}
         />
         <TodoList
-          filteredTodos={testList}
+          filteredTodos={filteredList}
           handlerDelete={handlerDelete}
           handlerComplete={handlerComplete}
         />

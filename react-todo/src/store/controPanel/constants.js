@@ -1,1 +1,1 @@
-export const CHANGE_STATUS = 'controlPanel/change-status';
+export const CHANGE_FILTER = 'controlPanel/change-status';

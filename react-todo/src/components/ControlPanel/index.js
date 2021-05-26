@@ -20,7 +20,7 @@ export const ControlPanel = ({
       <form
         className="control-radios"
         name="radios"
-        onChange={handlerSetFilterStatus}
+        onChange={(e) => handlerSetFilterStatus(e.target.value)}
       >
         <input
           type="radio"

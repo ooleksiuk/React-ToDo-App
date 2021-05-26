@@ -1,8 +1,8 @@
-import { CHANGE_STATUS } from './constants';
+import { CHANGE_FILTER } from './constants';
 
-export const completeAll = () => {
+export const changeFilter = (checkedFilter) => {
   return {
-    type: CHANGE_STATUS,
-    // payload: todos,
+    type: CHANGE_FILTER,
+    payload: checkedFilter,
   };
 };

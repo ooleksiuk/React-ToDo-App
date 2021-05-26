@@ -1,20 +1,13 @@
-import { CHANGE_STATUS } from './constants';
+import { CHANGE_FILTER } from './constants';
 
-const initialState = { status: { name: 'All', id: 0 } };
+// const initialState = { status: { name: 'All', id: 0 } };
+const initialState = { status: { name: 'all' } };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, action) {
   switch (action.type) {
-    // const handlerCompleteAll = () => {
-    //   setTodos(
-    //     todos.map((todo) =>
-    //       todo.completed ? todo : { ...todo, completed: !todo.completed }
-    //     )
-    //   );
-    // };
-
-    case CHANGE_STATUS:
-      return state;
+    case CHANGE_FILTER:
+      return { status: { name: action.payload } };
 
     default:
       return state;
