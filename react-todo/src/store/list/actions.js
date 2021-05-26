@@ -7,10 +7,10 @@ export const addTodo = (content) => {
   };
 };
 
-export const deleteTodo = (id) => {
+export const deleteTodo = (ids) => {
   return {
     type: DELETE_TODO,
-    payload: id,
+    payload: ids,
   };
 };
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import './ControlPanel.css';
+import { useSelector } from 'react-redux';
 
 export const ControlPanel = ({
-  leftTasksNumber,
+  leftTasks,
   setCompleteAll,
   clearAllCompleted,
   handlerSetFilterStatus,
@@ -13,9 +14,9 @@ export const ControlPanel = ({
       <span
         className="control-complete-all"
         id="completeAll"
-        onClick={(e) => setCompleteAll(e.target.id)}
+        onClick={() => setCompleteAll(leftTasks.map((todo) => todo.id))}
       >
-        {leftTasksNumber} tasks left
+        {leftTasks.length} tasks left
       </span>
       <form
         className="control-radios"

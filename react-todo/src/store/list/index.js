@@ -16,25 +16,18 @@ export default function (state = initalState, action) {
         list: [...state.list, { ...action.payload, id: id }],
       };
     }
-
     case CHANGE_STATUS: {
-      if (action.payload === 'completeAll') {
-        return {
-          ...state,
-          list: state.list.map((todo) =>
-            todo.completed ? todo : { ...todo, completed: !todo.completed }
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          list: state.list.map((todo) =>
-            todo.id === action.payload
-              ? { ...todo, completed: !todo.completed }
-              : todo
-          ),
-        };
-      }
+      return {
+        ...state,
+        list: state.list.map((todo) => {
+          return action.payload.includes(todo.id)
+            ? {
+                ...todo,
+                completed: !todo.completed,
+              }
+            : todo;
+        }),
+      };
     }
 
     case DELETE_TODO: {
