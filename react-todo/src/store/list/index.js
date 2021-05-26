@@ -22,17 +22,6 @@ export default function (state = initalState, action) {
       };
     }
 
-    // case STATUS_CHECK: {
-    //   switch (action.payload) {
-    //     case 'completed':
-    //       return state.list.filter((todo) => todo.completed);
-    //     case 'uncompleted':
-    //       return state.list.filter((todo) => !todo.completed);
-    //     default:
-    //       return state.list;
-    //   }
-    // }
-
     // const handlerComplete = (id) => {
     //   setTodos(
     //     todos.map((todo) =>
@@ -42,29 +31,32 @@ export default function (state = initalState, action) {
     // };
 
     case CHANGE_STATUS: {
-      return state.list.list.map((todo) =>
-        todo.id === action.payload.id
+      console.log('изменение статуса id - payload:', action.payload);
+      console.log('лист по которому мапимся', state.list);
+
+      const newList = state.list.map((todo) => {
+        // console.log(todo);
+        // console.log(todo.completed);
+        return todo.id === action.payload
           ? { ...todo, completed: !todo.completed }
-          : todo
-      );
+          : todo;
+      });
+
+      console.log('change status handler: ', newList);
+      return {
+        ...state,
+        list: [...newList],
+      };
     }
 
     case DELETE_TODO: {
-      const test = state.list.filter((todo) => todo.id !== action.payload);
-      return {};
+      const newList = state.list.filter((todo) => todo.id !== action.payload);
+      console.log('delete handler ', newList);
+      return {
+        ...state,
+        list: [...newList],
+      };
     }
-
-    // case DELETE_TODO:
-    //   return Object.assign(
-    //     {},
-    //     state.todos.filter((todo) => todo.id !== action.id)
-    //   );
-
-    // state.todos.filter((todo) => todo.id !== action.id);
-    // return Object.assign(
-    //   {},
-    //   { state.todos.filter((todo) => todo.id !== action.id) }
-    // );
 
     default:
       return state;

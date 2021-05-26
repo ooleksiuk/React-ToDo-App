@@ -14,9 +14,9 @@ export const deleteTodo = (id) => {
   };
 };
 
-export const changeStatus = (id, status) => {
+export const changeStatus = (id) => {
   return {
     type: CHANGE_STATUS,
-    payload: { id, status },
+    payload: id,
   };
 };

@@ -3,14 +3,22 @@ import { useState, useMemo } from 'react';
 import { InputForm } from '../../components/InputForm';
 import { TodoList } from '../../components/TodoList';
 import { ControlPanel } from '../../components/ControlPanel';
-import { addTodo, deleteTodo, statusCheck } from '../../store/list/actions';
+import {
+  addTodo,
+  changeStatus,
+  deleteTodo,
+  statusCheck,
+} from '../../store/list/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
 
 const List = () => {
+  // *  Redux *
   const dispatch = useDispatch();
   const list = useSelector((state) => state.list.list);
+  const state = useSelector((state) => state);
+
   // * State values *
   // input - text value of the input (use it as props)
   const [inputText, setInputText] = useState('');
@@ -18,8 +26,6 @@ const List = () => {
   const [todos, setTodos] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
   const [itemId, setItemId] = useState(1);
-
-  console.log('list', list);
 
   const testList = useMemo(() => {
     switch (filterStatus) {
@@ -51,6 +57,8 @@ const List = () => {
   const handlerAddTodo = () => {
     dispatch(addTodo({ text: inputText, completed: false }));
     setInputText('');
+    console.log('list', list);
+    console.log('state', state);
   };
 
   const handlerDelete = (id) => {
@@ -59,14 +67,13 @@ const List = () => {
     // setTodos(todos.filter((el) => el.id !== id));
   };
 
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
   const handlerComplete = (id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+    dispatch(changeStatus(id));
+    // setTodos(
+    //   todos.map((todo) =>
+    //     todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    //   )
+    // );
   };
 
   const handlerSetFilterStatus = (e) => {
@@ -91,13 +98,13 @@ const List = () => {
           handlerDelete={handlerDelete}
           handlerComplete={handlerComplete}
         />
-        {!!todos.length && (
+        {!!list.length && (
           <ControlPanel
-            leftTasksNumber={todos.filter((todo) => !todo.completed).length}
+            leftTasksNumber={list.filter((todo) => !todo.completed).length}
             setCompleteAll={handlerCompleteAll}
             clearAllCompleted={handlerClearAllCompleted}
             handlerSetFilterStatus={handlerSetFilterStatus}
-            hasAnyCompleted={!!todos.filter((todo) => todo.completed).length}
+            hasAnyCompleted={!!list.filter((todo) => todo.completed).length}
           />
         )}
       </div>
