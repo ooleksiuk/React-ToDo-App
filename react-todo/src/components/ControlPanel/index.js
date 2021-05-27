@@ -1,13 +1,12 @@
 import React from 'react';
 import './ControlPanel.css';
-import { useSelector } from 'react-redux';
 
 export const ControlPanel = ({
   leftTasks,
   setCompleteAll,
   clearAllCompleted,
   handlerSetFilterStatus,
-  AnyCompleted,
+  anyCompleted,
 }) => {
   return (
     <div className="control-panel">
@@ -49,11 +48,11 @@ export const ControlPanel = ({
         ></input>
         <label htmlFor="completed">Completed</label>
       </form>
-      {!!AnyCompleted.length && (
+      {!!anyCompleted.length && (
         <span
           className="control-clear-completed"
           id="clearAll"
-          onClick={() => clearAllCompleted(AnyCompleted)}
+          onClick={() => clearAllCompleted(anyCompleted.map((todo) => todo.id))}
         >
           Clear completed
         </span>

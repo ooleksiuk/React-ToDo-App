@@ -13,9 +13,6 @@ const List = () => {
   const dispatch = useDispatch();
   const list = useSelector((state) => state.list.list);
   const filterStatus = useSelector((state) => state.controlPanel.status.name);
-  // console.log('листы', list);
-
-  // !!!!
 
   // * State values *
   // input - text value of the input (use it as props)
@@ -39,8 +36,10 @@ const List = () => {
     setInputText('');
   };
 
-  const handlerDelete = (id) => {
-    dispatch(deleteTodo(id));
+  const handlerDelete = (ids) => {
+    typeof ids === 'object'
+      ? dispatch(deleteTodo(ids))
+      : dispatch(deleteTodo([ids]));
   };
 
   const handlerComplete = (ids) => {
@@ -52,8 +51,6 @@ const List = () => {
   const handlerSetFilterStatus = (name) => {
     dispatch(changeFilter(name));
   };
-
-  // * Functions *
 
   return (
     <div className="main-container">
@@ -77,7 +74,7 @@ const List = () => {
             setCompleteAll={handlerComplete}
             clearAllCompleted={handlerDelete}
             handlerSetFilterStatus={handlerSetFilterStatus}
-            AnyCompleted={list.filter((todo) => todo.completed)}
+            anyCompleted={list.filter((todo) => todo.completed)}
           />
         )}
       </div>

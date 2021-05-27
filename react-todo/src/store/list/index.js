@@ -19,37 +19,22 @@ export default function (state = initalState, action) {
     case CHANGE_STATUS: {
       return {
         ...state,
-        list: state.list.map((todo) => {
-          return action.payload.includes(todo.id)
+        list: state.list.map((todo) =>
+          action.payload.includes(todo.id)
             ? {
                 ...todo,
                 completed: !todo.completed,
               }
-            : todo;
-        }),
+            : todo
+        ),
       };
     }
-
-    // case DELETE_TODO: {
-    //   console.log(state.list.filter((todo) => {
-    //     return action.payload.includes(todo.id) ?
-    //   }))
-    // }
-
-    // case DELETE_TODO: {
-    //   if (action.payload === 'clearAll') {
-    //     return {
-    //       ...state,
-    //       list: state.list.filter((todo) => !todo.completed),
-    //     };
-    //   } else {
-    //     return {
-    //       ...state,
-    //       list: state.list.filter((todo) => todo.id !== action.payload),
-    //     };
-    //   }
-    // }
-
+    case DELETE_TODO: {
+      return {
+        ...state,
+        list: state.list.filter((todo) => !action.payload.includes(todo.id)),
+      };
+    }
     default:
       return state;
   }
