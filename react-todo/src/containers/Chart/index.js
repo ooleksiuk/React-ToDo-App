@@ -22,13 +22,12 @@ const Chart = () => {
       '#94c89c',
       '#31313180',
     ],
-    totalCount: 1309,
   };
 
   return (
     <div className="chart-container">
       <DoughnutChart
-        colors={mockData.colors.map((i) => i)}
+        colors={mockData.colors}
         count={mockData.juniorOnboardings.map((i) => i.count)}
         legend={mockData.juniorOnboardings.map((i) => i.departmentName)}
         total={mockData.juniorOnboardings
