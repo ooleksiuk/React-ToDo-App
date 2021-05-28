@@ -31,6 +31,9 @@ const Chart = () => {
         colors={mockData.colors.map((i) => i)}
         count={mockData.juniorOnboardings.map((i) => i.count)}
         legend={mockData.juniorOnboardings.map((i) => i.departmentName)}
+        total={mockData.juniorOnboardings
+          .map((i) => i.count)
+          .reduce((a, b) => a + b, 0)}
       />
     </div>
   );

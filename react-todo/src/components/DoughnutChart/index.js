@@ -2,7 +2,7 @@ import React from 'react';
 import './DoughnutChart.css';
 import { Doughnut } from 'react-chartjs-2';
 
-export const DoughnutChart = ({ colors, count, legend }) => {
+export const DoughnutChart = ({ colors, count, legend, total }) => {
   const data = {
     labels: legend,
     datasets: [
@@ -13,56 +13,55 @@ export const DoughnutChart = ({ colors, count, legend }) => {
       },
     ],
   };
+
+  const options = {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
+  const centerLabel = {
+    id: 'centerLabelPlugin',
+    beforeDraw: (chart) => {
+      drawTotals(chart);
+    },
+  };
+
+  function drawTotals(chart) {
+    const width = chart.chartArea.width,
+      height = chart.chartArea.height,
+      ctx = chart.ctx;
+
+    ctx.restore();
+    var fontSize = (height / 114).toFixed(2);
+    ctx.font = fontSize + 'em sans-serif';
+    ctx.textBaseline = 'middle';
+
+    // font color
+    ctx.fillStyle = '#382c9c';
+
+    var text = total,
+      textX = Math.round((width - ctx.measureText(text).width) / 2),
+      textY = height / 2;
+
+    ctx.fillText(text, textX, textY);
+    ctx.save();
+  }
+
   return (
     <div className="doughnut-container">
       <Doughnut
         data={data}
+        options={options}
         height={400}
         width={400}
-        options={{
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: true,
-              position: 'right',
-              rtl: true,
-              labels: {
-                boxWidth: 20,
-                boxHeight: 20,
-              },
-            },
-          },
-          legendCallback: (chart) => {
-            // return whatever you need here based on chart.data
-          },
-          legend: {
-            display: true,
-            position: 'right',
-            align: 'center',
-            fontFamily: 'Allianz-Neo',
-            textDirection: 'ltr',
-            labels: {
-              usePointStyle: true,
-              fontColor: '#006192',
-            },
-          },
-        }}
+        plugins={[centerLabel]}
       />
     </div>
   );
 };
 
 export default DoughnutChart;
-
-// options={{
-//   maintainAspectRatio: false,
-//   legend: {
-//     display: true,
-//     position: 'bottom',
-//     labels: {
-//       fontColor: 'black',
-//       fontFamily: 'Calibri Light',
-//       fontStyle: 'italic',
-//     },
-//   },
-// }}
