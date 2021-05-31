@@ -17,6 +17,16 @@ export const DoughnutChart = ({ colors, count, legend, total }) => {
     };
   };
 
+  const pickColor = (bgColor) => {
+    const color = bgColor.charAt(0) === '#' ? bgColor.substring(1, 7) : bgColor;
+    // Breakimg the hex code into 3 pieces to get the individual red, green, and blue intensities.
+    const r = parseInt(color.substring(0, 2), 16); // hexToR
+    const g = parseInt(color.substring(2, 4), 16); // hexToG
+    const b = parseInt(color.substring(4, 6), 16); // hexToB
+    // The threshold of 186 is based on theory, but can be adjusted to taste
+    return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? 'black' : 'white';
+  };
+
   const options = {
     maintainAspectRatio: false,
     plugins: {
@@ -25,16 +35,16 @@ export const DoughnutChart = ({ colors, count, legend, total }) => {
         position: 'right',
       },
       datalabels: {
-        color: 'white',
-        formatter: function (value) {
-          var percentage = (value / total) * 100;
-          if (percentage > 100) {
-            percentage = 100;
-          }
-          if (percentage < 5) {
-            return '';
-          }
-          return value;
+        color: (ctx) => {
+          console.log(ctx);
+          const dataIndex = ctx.dataIndex;
+          const labelBackground = ctx.dataset.backgroundColor[dataIndex];
+          return pickColor(labelBackground);
+        },
+
+        formatter: (value) => {
+          const percentage = (value / total) * 100;
+          return percentage < 5 ? '' : value;
         },
         font: {
           size: 22,
