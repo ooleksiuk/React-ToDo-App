@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import './DoughnutChart.css';
 import { Doughnut } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export const DoughnutChart = ({ colors, count, legend, total }) => {
   const data = () => {
@@ -23,24 +24,23 @@ export const DoughnutChart = ({ colors, count, legend, total }) => {
         display: true,
         position: 'right',
       },
-
-      // legendCallback: function (chart) {
-      //   var text = [];
-      //   text.push('<ul class="' + chart.id + '-legend">');
-      //   for (var i = 0; i < chart.data.datasets.length; i++) {
-      //     text.push(
-      //       '<li><span style="background-color:' +
-      //         chart.data.datasets[i].backgroundColor +
-      //         '"></span>'
-      //     );
-      //     if (chart.data.datasets[i].label) {
-      //       text.push(chart.data.datasets[i].label);
-      //     }
-      //     text.push('</li>');
-      //   }
-      //   text.push('</ul>');
-      //   return text.join('');
-      // },
+      datalabels: {
+        color: 'white',
+        formatter: function (value) {
+          var percentage = (value / total) * 100;
+          if (percentage > 100) {
+            percentage = 100;
+          }
+          if (percentage < 5) {
+            return '';
+          }
+          return value;
+        },
+        font: {
+          size: 22,
+        },
+        padding: 6,
+      },
     },
   };
 
@@ -72,31 +72,6 @@ export const DoughnutChart = ({ colors, count, legend, total }) => {
     ctx.save();
   }
 
-  // * Plugings: Custom Legend *
-
-  // const customLegend = {
-  //   id: 'centerLabelPlugin',
-  //   beforeDraw: (chart) => {
-  //     // drawLegend(chart);
-  //   },
-  // };
-
-  // function drawLegend(chart) {
-  //   legendCallback: function(chart) {
-  //     var text = [];
-  //     text.push('<ul class="' + chart.id + '-legend">');
-  //     for (var i = 0; i < chart.data.datasets.length; i++) {
-  //       text.push('<li><span style="background-color:' + chart.data.datasets[i].backgroundColor + '"></span>');
-  //       if (chart.data.datasets[i].label) {
-  //         text.push(chart.data.datasets[i].label);
-  //       }
-  //       text.push('</li>');
-  //     }
-  //     text.push('</ul>');
-  //     return text.join('');
-  //   }
-  // }
-
   const ref = useRef();
 
   return (
@@ -106,7 +81,7 @@ export const DoughnutChart = ({ colors, count, legend, total }) => {
         options={options}
         height={400}
         width={400}
-        plugins={[centerLabel]}
+        plugins={[centerLabel, ChartDataLabels]}
         ref={ref}
       />
     </div>

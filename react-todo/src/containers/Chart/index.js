@@ -11,7 +11,7 @@ const Chart = () => {
       { departmentName: 'Information technology', count: 222 },
       { departmentName: 'Marketing Department', count: 211 },
       { departmentName: 'Operations Department', count: 208 },
-      { departmentName: 'Sales Department', count: 21 },
+      { departmentName: 'Sales Department', count: 50 },
     ],
     colors: [
       '#faf1e2',
@@ -32,7 +32,9 @@ const Chart = () => {
         colors={mockData.colors}
         count={mockData.juniorOnboardings.map((i) => i.count)}
         legend={mockData.juniorOnboardings.map((i) => i.departmentName)}
-        total={mockData.totalCount}
+        total={mockData.juniorOnboardings
+          .map((i) => i.count)
+          .reduce((a, b) => a + b, 0)}
       />
     </div>
   );
