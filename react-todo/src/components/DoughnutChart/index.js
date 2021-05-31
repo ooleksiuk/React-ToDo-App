@@ -24,7 +24,14 @@ export const DoughnutChart = ({ colors, count, legend, total }) => {
     const g = parseInt(color.substring(2, 4), 16); // hexToG
     const b = parseInt(color.substring(4, 6), 16); // hexToB
     // The threshold of 186 is based on theory, but can be adjusted to taste
-    return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? 'black' : 'white';
+    const intensity = r * 0.299 + g * 0.587 + b * 0.114;
+    if (intensity > 186) {
+      return 'gray';
+    } else if (intensity > 160) {
+      return 'black';
+    } else {
+      return 'white';
+    }
   };
 
   const options = {
@@ -36,7 +43,6 @@ export const DoughnutChart = ({ colors, count, legend, total }) => {
       },
       datalabels: {
         color: (ctx) => {
-          console.log(ctx);
           const dataIndex = ctx.dataIndex;
           const labelBackground = ctx.dataset.backgroundColor[dataIndex];
           return pickColor(labelBackground);
