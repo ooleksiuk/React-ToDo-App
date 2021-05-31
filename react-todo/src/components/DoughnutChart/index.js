@@ -4,8 +4,6 @@ import { Doughnut } from 'react-chartjs-2';
 
 export const DoughnutChart = ({ colors, count, legend, total }) => {
   const data = () => {
-    // const ctx = canvas.getContext('2d');
-
     return {
       labels: legend,
       datasets: [
@@ -25,6 +23,7 @@ export const DoughnutChart = ({ colors, count, legend, total }) => {
         display: true,
         position: 'right',
       },
+
       // legendCallback: function (chart) {
       //   var text = [];
       //   text.push('<ul class="' + chart.id + '-legend">');

@@ -22,6 +22,8 @@ const Chart = () => {
       '#94c89c',
       '#31313180',
     ],
+    totalRows: 7,
+    totalCount: 1309,
   };
 
   return (
@@ -30,9 +32,7 @@ const Chart = () => {
         colors={mockData.colors}
         count={mockData.juniorOnboardings.map((i) => i.count)}
         legend={mockData.juniorOnboardings.map((i) => i.departmentName)}
-        total={mockData.juniorOnboardings
-          .map((i) => i.count)
-          .reduce((a, b) => a + b, 0)}
+        total={mockData.totalCount}
       />
     </div>
   );
