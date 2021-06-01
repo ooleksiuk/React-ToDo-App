@@ -30,8 +30,8 @@ const Chart = () => {
     <div className="chart-container">
       <DoughnutChart
         colors={mockData.colors}
-        count={mockData.juniorOnboardings.map((i) => i.count)}
-        legend={mockData.juniorOnboardings.map((i) => i.departmentName)}
+        countData={mockData.juniorOnboardings.map((i) => i.count)}
+        legendData={mockData.juniorOnboardings.map((i) => i.departmentName)}
         total={mockData.totalCount}
       />
     </div>
