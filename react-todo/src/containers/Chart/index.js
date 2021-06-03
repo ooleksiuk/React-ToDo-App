@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.css';
 import { DoughnutChart } from '../../components/DoughnutChart';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDataStart, getDataSuccess } from '../../store/doughnutChart/action';
 
 const Chart = () => {
+  const dispatch = useDispatch();
+  const storeData = useSelector((state) => state.doughnutChart.data);
+  const storeDataLoading = useSelector((state) => state.doughnutChart.loading);
+
   const mockData = {
     juniorOnboardings: [
       { departmentName: 'Finance Department', count: 211 },
@@ -26,16 +32,31 @@ const Chart = () => {
     totalCount: 1309,
   };
 
+  useEffect(() => {
+    dispatch(getDataStart());
+    setTimeout(() => {
+      dispatch(getDataSuccess(mockData));
+    }, 3000);
+  }, []);
+
   return (
     <div className="chart-container">
-      <DoughnutChart
-        colors={mockData.colors}
-        countData={mockData.juniorOnboardings.map((i) => i.count)}
-        legendData={mockData.juniorOnboardings.map((i) => i.departmentName)}
-        total={mockData.totalCount}
-      />
+      {!storeDataLoading ? (
+        <DoughnutChart
+          colors={storeData?.colors}
+          countData={storeData?.juniorOnboardings?.map((i) => i.count)}
+          legendData={storeData?.juniorOnboardings?.map(
+            (i) => i.departmentName
+          )}
+          total={storeData?.totalCount}
+        />
+      ) : (
+        <span>Loading...</span>
+      )}
     </div>
   );
 };
 
 export default Chart;
+
+// { name: 'test' }
