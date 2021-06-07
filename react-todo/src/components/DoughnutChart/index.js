@@ -82,11 +82,14 @@ export const DoughnutChart = ({ colors, countData, legendData, total }) => {
               const labelBackground = ctx.dataset.backgroundColor[dataIndex];
               return pickColor(labelBackground);
             },
-
-            formatter: (value) => {
-              const percentage = (value / total) * 100;
-              return percentage < 5 ? '' : value;
+            // Dynamic appearing of hide labels when it's enough space
+            // (is called on every dataset item)
+            formatter: (value, context) => {
+              const percentage = (value / totalVisible(context)) * 100;
+              // hide a label if the item takes less than 3% of the chart
+              return percentage < 3 ? '' : value;
             },
+
             font: {
               size: 20,
             },
@@ -96,9 +99,19 @@ export const DoughnutChart = ({ colors, countData, legendData, total }) => {
       ],
     };
 
+    // Calculate the current total of visible items
+    const totalVisible = (context) => {
+      const notHiddenItems = context.chart.legend.legendItems.filter(
+        (i) => !i.hidden
+      );
+      const itemIndecies = notHiddenItems.map((i) => i.index);
+      return context.dataset.data.reduce((prev, curr, i) => {
+        return itemIndecies.includes(i) ? prev + curr : prev;
+      }, 0);
+    };
+
     setData(doughnutData);
-    // legendRef.update();
-  }, [legendRef.current?.legend]);
+  }, []);
 
   useEffect(() => {
     console.log(legendRef.current?.legend.legendItems);
